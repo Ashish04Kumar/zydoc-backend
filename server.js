@@ -8,14 +8,21 @@ import doctorRouter from "./routes/doctor.route.js";
 import userRouter from "./routes/user.route.js";
 
 //APP CONFIG
-const app = express()
+const app = express();
 const port = process.env.PORT || 4000;
 connectDB();
 connectCloudinary();
 
 //middlewares
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 
 //api endpoint
 app.use("/api/admin", adminRouter);
@@ -28,5 +35,4 @@ app.get("/", (req, res) => {
 
 app.listen(port, () => {
   console.log("server started", port);
-
 });
